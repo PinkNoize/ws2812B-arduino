@@ -1,0 +1,5 @@
+LEDStrip	KEYWORD1
+LED	KEYWORD1
+
+write	KEYWORD2
+writeRange	KEYWORD2
