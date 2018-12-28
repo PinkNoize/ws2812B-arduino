@@ -249,8 +249,8 @@ void WS2812B::LEDStrip::writeRange(int pin, unsigned int count) {
             "ret\n"
             "led_strip_asm_end%=:"
             : "=b" (colors),
-              [next] "=b" (colors->next)
-            : "0" (colors),         // %a0 points to the next color to display
+              [next] "=b" (colors->next) // %[next] points to the next LED
+            : "0" (colors),              // %a0 points to the next color to display
             [port] "I" (pinAddr[pin]),   // %2 is the port register (e.g. PORTC)
             [pin]  "I" (pinBit[pin])     // %3 is the pin number (0-8)
         );
@@ -264,6 +264,7 @@ void WS2812B::LEDStrip::write(int pin) {
 
 void WS2812B::initLEDStrip(LED* lights, unsigned int size) {
     for(int i=size-1;i>=0;i--) {
+        //create circular linked list of LEDs
         lights[i].next=&lights[(i+1)%size];
     }
 }
