@@ -201,7 +201,6 @@ void WS2812B::LEDStrip::writeRange(int pin, unsigned int count) {
             "rcall send_led_strip_byte%=\n" // Send red component
             "ld __tmp_reg__, %a0\n"         // Read the blue component
             "rcall send_led_strip_byte%=\n" // Send blue component
-            "movw %a0, %[next]\n"             //increment to next LED
             "rjmp led_strip_asm_end%=\n"    //Jump past the assembly subroutines.
             
             // send_led_strip_byte subroutine:  Sends a byte to the LED strip.
@@ -248,12 +247,12 @@ void WS2812B::LEDStrip::writeRange(int pin, unsigned int count) {
             "brcc .+2\n" "cbi %[port], %[pin]\n"              // If the bit to send is 1, drive the line low now.
             "ret\n"
             "led_strip_asm_end%=:"
-            : "=b" (colors),
-              [next] "=b" (colors->next) // %[next] points to the next LED
-            : "0" (colors),              // %a0 points to the next color to display
+            :
+            : [col] "z" (colors),        
             [port] "I" (pinAddr[pin]),   // %2 is the port register (e.g. PORTC)
             [pin]  "I" (pinBit[pin])     // %3 is the pin number (0-8)
         );
+        colors=colors->next;
     }
     sei();      //re-enable interrupts
 }
