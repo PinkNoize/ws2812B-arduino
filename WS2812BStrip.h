@@ -18,8 +18,8 @@ namespace WS2812B {
             LED* start;
             unsigned int size;
             LEDStrip(LED* start, unsigned int size);
-            void write(int pin);
-            void writeRange(int pin, unsigned int count);
+            void write(unsigned char pin);
+            void writeRange(unsigned char pin, unsigned int count);
     };
 };
 #endif

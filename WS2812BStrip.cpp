@@ -185,7 +185,7 @@
 
 WS2812B::LEDStrip::LEDStrip(LED* start, unsigned int size) : start(start), size(size) {};
 
-void WS2812B::LEDStrip::writeRange(int pin, unsigned int count) {
+void WS2812B::LEDStrip::writeRange(unsigned char pin, unsigned int count) {
     LED* colors=this->start;
     digitalWrite(pin,LOW);
     pinMode(pin,OUTPUT);
@@ -257,7 +257,7 @@ void WS2812B::LEDStrip::writeRange(int pin, unsigned int count) {
     sei();      //re-enable interrupts
 }
 
-void WS2812B::LEDStrip::write(int pin) {
+void WS2812B::LEDStrip::write(unsigned char pin) {
     this->writeRange(pin, this->size);
 }
 
